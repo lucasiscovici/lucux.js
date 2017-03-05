@@ -1,0 +1,22 @@
+.tcenter {
+    text-align:center !important;
+}
+.centerH, .center {
+	position: absolute;
+	top:50%;
+	transform: translateY(-50%);
+}
+.centerV, .middle {
+	position: absolute;
+	left:50%;
+	transform: translateX(-50%);
+}
+.centerHV, .centerVH, .midter {
+	position: absolute;
+	left:50%;
+	top:50%;
+	transform: translateX(-50%) translateY(-50%);
+	text-align:center !important;
+
+
+}
