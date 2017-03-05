@@ -19,7 +19,14 @@
     CSSStyleDeclaration.prototype.getPropertyValue = function(a) {
       return this.getAttribute(a);
     };
-    CSSStyleDeclaration.prototype.setProperty = function(styleName, value, priority) {
+    Object.defineProperty(
+CSSStyleDeclaration.prototype,
+'setProperty',
+{
+enumerable:false,
+writable: true,
+value:function(styleName, value, priority) {
+
       this.setAttribute(styleName, value);
       var priority = typeof priority != 'undefined' ? priority : '';
       if (priority != '') {
@@ -28,8 +35,13 @@
             '(\\s*;)?', 'gmi');
         this.cssText =
             this.cssText.replace(rule, styleName + ': ' + value + ' !' + priority + ';');
+
       }
-    };
+    }
+}
+);
+
+    
     CSSStyleDeclaration.prototype.removeProperty = function(a) {
       return this.removeAttribute(a);
     };
@@ -41,8 +53,10 @@
   }
 
   // The style function
-  $.fn.style = function(styleName, value, priority) {
+  $.fn.cssImportant = function(a) {
     // DOM node
+    console.log(a);
+    console.log(this);
     var node = this.get(0);
     // Ensure we have a DOM node
     if (typeof node == 'undefined') {
@@ -51,10 +65,21 @@
     // CSSStyleDeclaration
     var style = this.get(0).style;
     // Getter/Setter
+    for (i in a) {
+      styleName = i;
+
+      value = a[i];
+      priority="";
+      if (value.match(/!important/i)) {
+        priority = "important";
+        value=value.split("!")[0];
+      }
+
     if (typeof styleName != 'undefined') {
       if (typeof value != 'undefined') {
         // Set style property
         priority = typeof priority != 'undefined' ? priority : '';
+
         style.setProperty(styleName, value, priority);
         return this;
       } else {
@@ -65,6 +90,7 @@
       // Get CSSStyleDeclaration
       return style;
     }
+  }
   };
 })(jQuery);
 //MULTI ONLY SIZE -> LESS IN FIRST
@@ -643,11 +669,12 @@ sd = this.name.split("-");
              
                 tab_n_obj.push(lp[0].get(0));
                 tab_n.push({}); //NEW ARRAY
-
+                cssi=false;
                 for (var oo = 0; oo < lp[1].length; oo++) {
                     l = lp[1][oo]; // NAME ATTRIBUTE
 
                     ds = l.name.split("-");
+
                     dd = l.value; // VAL ATTR
                     first = ds[0];
                     second = ds[1];
@@ -691,14 +718,6 @@ sd = this.name.split("-");
                             sss = ddz[1];
                             if (ss.length > 0) {
                                 tab_n[b][ds[0]][ds[1]][ds[2]][ss] = sss;
-                            }
-                        } else if (ds[2] == "cssi") {
-                            ds[2] = "css";
-                            ddz = i.split(":");
-                            ss = ddz[0];
-                            sss = ddz[1];
-                            if (ss.length > 0) {
-                                tab_n[b][ds[0]][ds[1]][ds[2]][ss] =sss + " !important";
                             }
                         } else if (ds[2] == "class") {
 
