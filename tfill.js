@@ -126,7 +126,7 @@ var fontSize = maxFontPixels;
       
         var textWidth;
         var deb = ourText.css("visibility");
-        ourText.css("visibility","0");
+        ourText.css("visibility","hidden");
         do {
 
             ourText.cssImportant({'font-size':fontSize+uniti+" !important;"});

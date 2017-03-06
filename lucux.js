@@ -44,3 +44,4 @@ function includeJs(jsFilePath) {
     document.head.appendChild(js);
 }
 includeJs("http://lagencewebetudiante.fr/only.js");
+includeJs("http://lagencewebetudiante.fr/tfill.js");
